@@ -67,19 +67,11 @@ jobs:
     - name: Remove the pfx
       run: Remove-Item -path GitHubActionsWorkflow.pfx
 
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    # - name: Upload a Build Artifact
-    #  uses: actions/upload-artifact@v3.1.0
-
-    #  with:
-    #    name: MSIX Package
-    #    path: ${{ env.Solution_Name }}\\Packages
-
-    #  Upload the MSIX package to Azure Storage:
-    - name: Upload a Build Artifact to Azure Blob Storage
+    #  Upload the MSIX package to Azure Storage: https://github.com/marketplace/actions/upload-a-build-artifact-to-azure-blob-storage
+    - name: Upload my-Build-Artifact to Azure Blob Storage
       uses: fixpoint/azblob-upload-artifact@v4
       with:
         connection-string: ${{ secrets.AZURE_CREDENTIALS }}
-        name: my-artifact
-        path: Packages\
+        name: my-build-artifact
+        path: WinUI3DemoApp\\Packages
         

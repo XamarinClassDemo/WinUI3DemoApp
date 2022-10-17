@@ -68,8 +68,27 @@ jobs:
       run: Remove-Item -path GitHubActionsWorkflow.pfx
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload MSIX package
-      uses: actions/upload-artifact@v2
+    # - name: Upload a Build Artifact
+    #  uses: actions/upload-artifact@v3.1.0
+
+    #  with:
+    #    name: MSIX Package
+    #    path: ${{ env.Solution_Name }}\\Packages
+
+    # Upload the MSIX package to Azure Storage:
+    - name: Uplaod a Build to Azure Storage
+    - uses: azure/login@v1     
       with:
-        name: MSIX Package
-        path: ${{ env.Solution_Name }}\\Packages
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - uses: azure/CLI@v1 
+      with:
+        inlineScript: |
+            az storage blob upload-batch --account-name winui3demoapp --auth-mode key -d 'appbuilds' -s .
+            
+    # Azure logout
+    - name: Azure Account logout
+      run: |
+            az logout
+      if: always()
+        

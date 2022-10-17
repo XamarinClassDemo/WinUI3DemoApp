@@ -75,22 +75,11 @@ jobs:
     #    name: MSIX Package
     #    path: ${{ env.Solution_Name }}\\Packages
 
-    # Login to Azure Storage:
-    - name: Login to Azure Storage
-    - uses: azure/login@v1     
+    #  Upload the MSIX package to Azure Storage:
+    - name: Upload a Build Artifact to Azure Blob Storage
+      uses: fixpoint/azblob-upload-artifact@v4
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    
-    # Upload the MSIX package to Azure Storage:
-    - name: Uplaod a Build to Azure Storage
-    - uses: azure/CLI@v1 
-      with:
-        inlineScript: |
-            az storage blob upload-batch --account-name winui3demoapp --auth-mode key -d 'appbuilds' -s .
-            
-    # Azure Storage Account Logout
-    - name: Azure Account logout
-      run: |
-            az logout
-      if: always()
+        connection-string: ${{ secrets.AZURE_CREDENTIALS }}
+        name: my-artifact
+        path: Packages\
         

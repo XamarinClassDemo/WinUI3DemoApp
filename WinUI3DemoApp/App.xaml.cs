@@ -43,9 +43,10 @@ namespace WinUI3DemoApp
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
-            m_window.Activate();
+            Window.Activate();
         }
 
         private Window m_window;
+        public Window Window => m_window;
     }
 }

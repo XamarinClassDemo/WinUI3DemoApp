@@ -5,3 +5,6 @@
 /.vs
 /WinUI3DemoApp/obj
 /WinUI3DemoApp/bin
+/WinUI3DemoApp/BundleArtifacts
+*.user
+*.pfx
